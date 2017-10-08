@@ -1,0 +1,27 @@
+{
+  "session": {
+    "session-secret": "SessionSecret",
+    "cookie-maxage": 86400000 // 24 hours
+  },
+  "maps": [
+    {
+      "realname": "Product",
+      "mapfile": "koth_product_rc8",
+      "gamemode": "koth",
+      "config": "koth_config"
+    }
+  ],
+  "configs": [
+    {
+      "name": "KotH Config",
+      "command": "koth_config",
+      "description": "Used for 6v6 KotH matches"
+    }
+  ],
+  "common-commands": [
+    {
+      "name": "Add bot",
+      "command": "tf_bot_add"
+    }
+  ]
+}
