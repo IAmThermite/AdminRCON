@@ -1,34 +1,39 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser')
 const ejs = require('ejs');
 const session = require('cookie-session');
-const config = reqire('config');
-const rcon = require('srcds-rcon');
+const config = require('config');
+const Rcon = require('srcds-rcon');
 
 const app = express();
 
-// APP SETUP \\
+// APP SETUP
 app.set('trust proxy', 1);
-app.use(cookieSession({
-  name: 'session',
-  secret: config.get('session.session-secret'),
+app.use(session({
+  name: config.get('session.name'),
+  secret: config.get('session.secret'),
   maxAge: config.get('session.cookie-maxage'),
 }));
 
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 
-// APP GET ROUTES \\
+// APP GET ROUTES
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {
+    title: 'AdminRCON Homepage',
+    server: req.session.server || undefined,
+  });
 });
 
 app.get('/maps', (req, res) => {
   if(req.session.server) {
     res.render('maps', {
+      title: 'Change the Map',
       server: req.session.server,
       mapList: config.get('maps'),
     });
@@ -38,6 +43,7 @@ app.get('/maps', (req, res) => {
 app.get('/configs', (req, res) => {
   if(req.session.server) {
     res.render('configs', {
+      title: 'Execute a config',
       server: req.session.server,
       configList: config.get('configs'),
     });
@@ -47,7 +53,9 @@ app.get('/configs', (req, res) => {
 app.get('/password', (req, res) => {
   if(req.session.server) {
     res.render('password', {
+      title: 'Change Server Password',
       server: req.session.server,
+      changed: false,
     });
   }
 });
@@ -56,6 +64,7 @@ app.get('/players', (req, res) => {
   if(req.session.server) {
     // get the formatted players list from `status` command
     res.render('players', {
+      title: 'Manage Players on Server',
       server: req.session.server,
       playerList: '',
     });
@@ -65,6 +74,7 @@ app.get('/players', (req, res) => {
 app.get('/command', (req, res) => {
   if(req.session.server) {
     res.render('command', {
+      title: 'Execute a command',
       server: req.session.server,
       commonComands: config.get('common-commands'),
     });
@@ -76,26 +86,50 @@ app.get('/help', (req, res) => {
 });
 
 
-// APP POST ROUTES \\
+// APP POST ROUTES
 app.post('/server', (req, res) => {
-  if(req.body.server) {
-    req.session.server = req.body.server;
+  console.log(req.body);
+  if(req.body.address) {
+    req.session.server = {
+      address: req.body.address,
+      rcon: req.body.password,
+    };
     res.redirect('/');
   } else {
-    res.render('400', {
+    res.render('error', {
       code: '400',
       error: 'No server found',
     });
   }
 });
 
-app.post('execute', (req, res) => {
-  // execute command, if error go to 400 or 500
-  // depending on error or go back to parent page
+app.post('/execute', (req, res) => {
+  var server = Rcon({
+    address: req.session.address,
+    password: req.session.password,
+  });
+  
+  server.connect().then(() => {
+    try { // try and find the required action file
+      var action = require(`./actions/${req.body.action}.js`);
+      action.run(server, req.body, res); // run the command file
+      server.disconnect();
+    } catch(e) { // file not found
+      res.render('error', {
+        code: 500,
+        error: 'Internal Server Error',
+      });
+    }
+  }).catch((e) => { // cant connect to server
+    res.render('error', {
+      code: 400,
+      error: 'Invalid server details',
+    });
+  });
 });
 
 
-// START APP \\
+// START APP
 app.listen(3000, () => {
   console.log('App running');
 });

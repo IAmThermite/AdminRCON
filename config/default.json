@@ -1,6 +1,7 @@
 {
   "session": {
-    "session-secret": "SessionSecret",
+    "name": "AdminRCONSessionName",
+    "secret": "SessionSecret",
     "cookie-maxage": 86400000 // 24 hours
   },
   "maps": [

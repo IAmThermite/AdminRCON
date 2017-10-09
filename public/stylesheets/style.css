@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+ 
+body {
+    font-size: 24px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#navbar ul {
+    margin-top: 20px;
+}
+#navbar ul li {    
+    display: inline-block;
+    list-style-type: none;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+#navbar ul li a {
+    text-decoration: none;
+    color: #000000;
+    padding: 5px;
+    background-color: #c8f442;
+    border: 1px solid #111111;
+    border-radius: 5px;
+}
+#navbar ul li a:hover {
+    text-decoration: none;
+    background-color: #93ba1b;
+}
+
+.success
