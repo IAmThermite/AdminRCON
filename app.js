@@ -83,7 +83,10 @@ app.get('/command', (req, res) => {
 });
 
 app.get('/help', (req, res) => {
-  res.render('help', {});
+  res.render('help', {
+    title: 'Help',
+    server: req.session.server || undefined,
+  });
 });
 
 app.get('/clear', (req, res) => {
