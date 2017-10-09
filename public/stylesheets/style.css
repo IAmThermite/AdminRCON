@@ -3,6 +3,14 @@
 body {
     font-size: 24px;
     font-family: 'Roboto Mono', monospace;
+    color: #000000;
+}
+
+a {
+    color: #000000;
+}
+a:hover {
+    color: #000000;
 }
 
 #navbar ul {
@@ -19,12 +27,26 @@ body {
     color: #000000;
     padding: 5px;
     background-color: #c8f442;
-    border: 1px solid #111111;
-    border-radius: 5px;
+    border: 2px solid #111111;
+    border-radius: 10px;
 }
 #navbar ul li a:hover {
     text-decoration: none;
-    background-color: #93ba1b;
+    background-color: #97b926;
 }
 
-.success
+.success {
+    background-color: #bbff006e;
+    padding: 5px;
+    border: 2px solid #000000;
+}
+
+.title {
+    font-size: 48px;
+}
+
+.container {
+    padding: 0px 40px;
+    background-color: #ee6969;
+    border-radius: 20px;
+}

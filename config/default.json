@@ -6,23 +6,23 @@
   },
   "maps": [
     {
-      "realname": "Product",
-      "mapfile": "koth_product_rc8",
-      "gamemode": "koth",
-      "config": "koth_config"
+      "realname": "Map",
+      "mapfile": "map_mapname",
+      "gamemode": "map",
+      "config": "map_config"
     }
   ],
   "configs": [
     {
-      "name": "KotH Config",
-      "command": "koth_config",
-      "description": "Used for 6v6 KotH matches"
+      "name": "Map Config",
+      "command": "map_config",
+      "description": "This is a match description"
     }
   ],
   "common-commands": [
     {
       "name": "Add bot",
-      "command": "tf_bot_add"
+      "command": "bot_add"
     }
   ]
 }

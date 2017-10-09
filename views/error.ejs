@@ -1,8 +1,18 @@
  <!DOCTYPE html>
  <html>
     <% title='ERROR | ' + code %>
-    <% include partials/head %>
+    <% include partials/part_head %>
     <body>
-        <p><%= error %></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="title"><%= error %></p>
+                    <p><a href="/">Go Home</a> or <a href="/help">Help</a></p>
+                </div>
+            </div>
+            <div class="row">
+                <% include partials/part_footer %>
+            </div>
+        </div>
     </body>
  </html>

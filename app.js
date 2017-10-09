@@ -36,6 +36,7 @@ app.get('/maps', (req, res) => {
       title: 'Change the Map',
       server: req.session.server,
       mapList: config.get('maps'),
+      changed: false,
     });
   }
 });
@@ -85,16 +86,25 @@ app.get('/help', (req, res) => {
   res.render('help', {});
 });
 
+app.get('/clear', (req, res) => {
+  req.session = null;
+  res.redirect('/');
+});
+
 
 // APP POST ROUTES
 app.post('/server', (req, res) => {
-  console.log(req.body);
   if(req.body.address) {
     req.session.server = {
       address: req.body.address,
       rcon: req.body.password,
     };
     res.redirect('/');
+  } else if(req.body.string) {
+    req.session.server = {
+      address: '',
+      rcon: '',
+    }
   } else {
     res.render('error', {
       code: '400',
@@ -105,19 +115,18 @@ app.post('/server', (req, res) => {
 
 app.post('/execute', (req, res) => {
   var server = Rcon({
-    address: req.session.address,
-    password: req.session.password,
+    address: `${req.session.server.address}`,
+    password: `${req.session.server.rcon}`,
   });
   
   server.connect().then(() => {
     try { // try and find the required action file
       var action = require(`./actions/${req.body.action}.js`);
-      action.run(server, req.body, res); // run the command file
-      server.disconnect();
+      action.run(server, req.body, res, req); // run the command file
     } catch(e) { // file not found
       res.render('error', {
         code: 500,
-        error: 'Internal Server Error',
+        error: 'Internal Server Error. Contact developer.',
       });
     }
   }).catch((e) => { // cant connect to server

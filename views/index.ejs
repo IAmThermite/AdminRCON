@@ -4,7 +4,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <% include partials/navbar %>
+                <% include partials/part_navbar %>
             </div>
             <div class="row">
                 <form action="/server" method="POST">
@@ -16,10 +16,20 @@
                         <label class="control-label" for="rcon">RCON Password:</label>
                         <input class="input-lg" type="text" name="password" id="password" />
                     </div>
+                    <div class="form-group col-sm-12">
+                        <label class="control-label" for="string">Connect String:</label>
+                        <input class="input-lg" type="text" name="string" id="string" />
+                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn-success btn-lg">Submit</button>
                     </div>
                 </form>
+            </div>
+            <div class="row">
+                <% include text/text_home %>
+            </div>
+            <div class="row">
+                <% include partials/part_footer %>
             </div>
         </div>
     </body>
