@@ -45,6 +45,11 @@ a:hover {
     font-size: 48px;
 }
 
+.subtitle {
+    font-size: 16px;
+    color: #2e4363;
+}
+
 .container {
     padding: 0px 40px;
     background-color: #ee6969;

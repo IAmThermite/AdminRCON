@@ -47,6 +47,7 @@ app.get('/configs', (req, res) => {
       title: 'Execute a config',
       server: req.session.server,
       configList: config.get('configs'),
+      changed: false,
     });
   }
 });
@@ -77,7 +78,8 @@ app.get('/command', (req, res) => {
     res.render('command', {
       title: 'Execute a command',
       server: req.session.server,
-      commonComands: config.get('common-commands'),
+      commandList: config.get('common-commands'),
+      changed: false,
     });
   }
 });

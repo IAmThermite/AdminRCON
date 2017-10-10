@@ -6,9 +6,39 @@
             <div class="row">
                 <% include partials/part_navbar %>
             </div>
-        </div>
-        <div class="row">
-            <% include partials/part_footer %>
+            <% if(changed) { %>
+                <div class="row">
+                    <p class="success">Config executed!</p>
+                </div>
+            <% } %>
+            <div class="row">
+                <form action="/execute" method="POST">
+                    <div class="form-group col-sm-6">
+                        <label class="control-label" for="command">Execute Config</label>
+                        <input class="input-lg" type="text" name="config" id="config" />
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <button class="btn-success btn-lg" type="submit">Execute</button>
+                    </div>
+                    <input type="hidden" name="action" value="config" />
+                </form>
+            </div>
+            <div class="row">
+                <% for(var i=0; i<configList.length; i++) { %>
+                    <form action="/execute" method="POST">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="config"><%= configList[i].name %></label>
+                            <p class="subtitle"><%= configList[i].description %></p>
+                            <button class="btn-success btn-lg" type="submit">Execute</button>
+                            <input type="hidden" name="config" value="<%= configList[i].command %>" id="config" />
+                        </div>
+                        <input type="hidden" name="action" value="config" />
+                    </form>
+                <% } %>
+            </div>
+            <div class="row">
+                <% include partials/part_footer %>
+            </div>
         </div>
     </body>
 </html>

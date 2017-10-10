@@ -16,7 +16,7 @@
     {
       "name": "Map Config",
       "command": "map_config",
-      "description": "This is a match description"
+      "description": "This is a config description"
     }
   ],
   "common-commands": [
