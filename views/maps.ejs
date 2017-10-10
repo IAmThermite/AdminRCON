@@ -7,10 +7,31 @@
                 <% include partials/part_navbar %>
             </div>
             <% if(changed) { %>
-                <div class="row">
-                    <p class="success">Map changed!</p>
-                </div>
+                <% if(error) { %>
+                    <div class="row">
+                        <p class="fail">Map not found!</p>
+                    </div>
+                <% } else { %>
+                    <div class="row">
+                        <p class="success">Map changed! Check the server for the map change.</p>
+                    </div>
+                <% } %>
             <% } %>
+            <div class="row">
+                <p class="subtitle">If the map has been changed sucessfully you will be redirected back here, after the server has changed map. If the map was not changed on the server, re-enter your server details and try again.</p>
+            </div>
+            <div class="row">
+                <form action="/execute" method="POST">
+                    <div class="form-group col-sm-6">
+                        <label class="control-label" for="mapname">Map Name:</label>
+                        <input class="input-lg" type="text" name="mapname" id="config" />
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <button class="btn-success btn-lg" type="submit">Change Map</button>
+                    </div>
+                    <input type="hidden" name="action" value="map" />
+                </form>
+            </div>
             <div class="row">
                 <% for(var i=0; i<mapList.length; i++) { %>
                     <form action="/execute" method="POST">

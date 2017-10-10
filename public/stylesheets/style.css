@@ -6,6 +6,14 @@ body {
     color: #000000;
 }
 
+div .footer {
+    background-color: #5cc6f7;
+    padding: 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 a {
     color: #0f7704;
 }
@@ -36,7 +44,13 @@ a:hover {
 }
 
 .success {
-    background-color: #bbff006e;
+    background-color: #83b302;
+    padding: 5px;
+    border: 2px solid #000000;
+}
+
+.fail {
+    background-color: #f77d50;
     padding: 5px;
     border: 2px solid #000000;
 }

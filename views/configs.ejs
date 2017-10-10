@@ -7,14 +7,20 @@
                 <% include partials/part_navbar %>
             </div>
             <% if(changed) { %>
-                <div class="row">
-                    <p class="success">Config executed!</p>
-                </div>
+                <% if(error) { %>
+                    <div class="row">
+                        <p class="fail">Config not found!.</p>
+                    </div>
+                <% } else { %>
+                    <div class="row">
+                        <p class="success">Config executed</p>
+                    </div>
+                <% } %>
             <% } %>
             <div class="row">
                 <form action="/execute" method="POST">
                     <div class="form-group col-sm-6">
-                        <label class="control-label" for="command">Execute Config</label>
+                        <label class="control-label" for="command">Execute Config:</label>
                         <input class="input-lg" type="text" name="config" id="config" />
                     </div>
                     <div class="form-group col-sm-6">

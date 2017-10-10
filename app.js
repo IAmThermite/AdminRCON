@@ -25,7 +25,14 @@ app.use(express.static('public'));
 // APP GET ROUTES
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'AdminRCON Homepage',
+    title: config.get('app-name'),
+    server: req.session.server || undefined,
+  });
+});
+
+app.get('/server', (req, res) => {
+  res.render('server', {
+    title: config.get('app-name'),
     server: req.session.server || undefined,
   });
 });
@@ -37,6 +44,7 @@ app.get('/maps', (req, res) => {
       server: req.session.server,
       mapList: config.get('maps'),
       changed: false,
+      error: false,
     });
   }
 });
@@ -48,6 +56,7 @@ app.get('/configs', (req, res) => {
       server: req.session.server,
       configList: config.get('configs'),
       changed: false,
+      error: false,
     });
   }
 });
@@ -105,7 +114,7 @@ app.post('/server', (req, res) => {
       rcon: req.body.password,
     };
     res.redirect('/');
-  } else if(req.body.string) {
+  } else if(req.body.string) { // generate string parameters
     req.session.server = {
       address: '',
       rcon: '',
@@ -114,6 +123,7 @@ app.post('/server', (req, res) => {
     res.render('error', {
       code: '400',
       error: 'No server found',
+      full: ''
     });
   }
 });
@@ -138,6 +148,7 @@ app.post('/execute', (req, res) => {
     res.render('error', {
       code: 400,
       error: 'Invalid server details',
+      full: e,
     });
   });
 });

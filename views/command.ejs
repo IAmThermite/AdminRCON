@@ -7,9 +7,15 @@
                 <% include partials/part_navbar %>
             </div>
             <% if(changed) { %>
-                <div class="row">
-                    <p class="success">Command executed!</p>
-                </div>
+                <% if(error) { %>
+                    <div class="row">
+                        <p class="fail">Command not found!</p>
+                    </div>
+                <% } else { %>
+                    <div class="row">
+                        <p class="success">Command executed</p>
+                    </div>
+                <% } %>
             <% } %>
             <div class="row">
                 <form action="/execute" method="POST">
