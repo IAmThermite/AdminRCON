@@ -35,7 +35,7 @@ The main configuration is located in `/config/default.json`. You sould create a 
 - `configs`: An array of server configs. Stored as objects.
 
   - `name`: Config name.
-  - `command`: The actual config name
+  - `config`: The actual config name
   - `description`: A short description of what the config does.
   
 - `common-commands`: Some useful commands to execute with a single click

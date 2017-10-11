@@ -21,6 +21,24 @@ app.use(bodyParser.json())
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+// METHODS
+const getServerFromString = (string, res) =>  {
+  const parts = string.split('; '); // divide
+
+  var array = [];
+  try {
+    for(var i = 0; i < 3; i++) {
+      array.push(parts[i].slice(parts[i].indexOf(' '), parts[i].length).replace(/"/g, '').trim());
+    }
+    return array;
+  } catch(e) {
+    res.render('error', {
+      code: 400,
+      error: 'Invalid connect string! Format: connect <hostname>; password <password>; rcon_password <rcon_password>',
+      full: e,
+    });
+  }
+}
 
 // APP GET ROUTES
 app.get('/', (req, res) => {
@@ -108,21 +126,23 @@ app.get('/clear', (req, res) => {
 
 // APP POST ROUTES
 app.post('/server', (req, res) => {
-  if(req.body.address) {
+  if(req.body.address !== undefined && req.body.address !== '') {
     req.session.server = {
       address: req.body.address,
       rcon: req.body.password,
     };
     res.redirect('/');
   } else if(req.body.string) { // generate string parameters
+    const string = getServerFromString(req.body.string);
     req.session.server = {
-      address: '',
-      rcon: '',
+      address: string[0],
+      rcon: string[2],
     }
+    res.redirect('/');
   } else {
     res.render('error', {
-      code: '400',
-      error: 'No server found',
+      code: 400,
+      error: 'Please enter an IP',
       full: ''
     });
   }
@@ -142,6 +162,7 @@ app.post('/execute', (req, res) => {
       res.render('error', {
         code: 500,
         error: 'Internal Server Error. Contact developer.',
+        full: e,
       });
     }
   }).catch((e) => { // cant connect to server

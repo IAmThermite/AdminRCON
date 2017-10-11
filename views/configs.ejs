@@ -20,7 +20,7 @@
             <div class="row">
                 <form action="/execute" method="POST">
                     <div class="form-group col-sm-6">
-                        <label class="control-label" for="command">Execute Config:</label>
+                        <label class="control-label" for="config">Execute Config:</label>
                         <input class="input-lg" type="text" name="config" id="config" />
                     </div>
                     <div class="form-group col-sm-6">
@@ -29,19 +29,24 @@
                     <input type="hidden" name="action" value="config" />
                 </form>
             </div>
-            <div class="row">
-                <% for(var i=0; i<configList.length; i++) { %>
-                    <form action="/execute" method="POST">
-                        <div class="col-sm-3">
-                            <label class="control-label" for="config"><%= configList[i].name %></label>
-                            <p class="subtitle"><%= configList[i].description %></p>
-                            <button class="btn-success btn-lg" type="submit">Execute</button>
-                            <input type="hidden" name="config" value="<%= configList[i].command %>" id="config" />
-                        </div>
-                        <input type="hidden" name="action" value="config" />
-                    </form>
+                <% for(var i=0; i<configList.length;) { %>
+                <div class="row">
+                    <% for(var j=0; j<4; j++) { %>
+                        <% if(configList[i] !== undefined) { %>
+                            <div class="col-sm-3">
+                                <form action="/execute" method="POST">
+                                    <label class="control-label" for="config"><%= configList[i].name %></label>
+                                    <p class="subtitle"><%= configList[i].description %></p>
+                                    <button class="btn-success btn-lg" type="submit">Execute</button>
+                                    <input type="hidden" name="config" value="<%= configList[i].config %>" id="config" />
+                                    <input type="hidden" name="action" value="config" />
+                                </form>
+                            </div>
+                            <% i++ %>
+                        <% } %>
+                    <% } %>
+                </div>
                 <% } %>
-            </div>
             <div class="row">
                 <% include partials/part_footer %>
             </div>
