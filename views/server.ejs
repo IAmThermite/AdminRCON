@@ -10,24 +10,34 @@
                 <form action="/server" method="POST">
                     <div class="form-group col-sm-6">
                         <label class="control-label" for="address">Address:</label>
-                        <input class="input-lg" value="<%= server.address %>" type="text" name="address" id="address" />
+                        <% if(server !== undefined) { %>
+                            <input class="input-lg" value="<%= server.address %>" type="text" name="address" id="address" />
+                        <% } else { %>
+                            <input class="input-lg" value="" type="text" name="address" id="address" />
+                        <% } %>
                     </div>
                     <div class="form-group col-sm-6">
                         <label class="control-label" for="password">RCON:</label>
-                        <input class="input-lg" value="<%= server.rcon %>" type="text" name="password" id="password" />
+                        <% if(server !== undefined) { %>
+                            <input class="input-lg" value="<%= server.rcon %>" type="text" name="password" id="password" />
+                        <% } else { %>
+                            <input class="input-lg" value="" type="text" name="password" id="password" />
+                        <% } %>
                     </div>
                     <div class="form-group col-sm-12">
                         <button class="btn-success btn-lg" type="submit">Update Settings</button>
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <form action="/clear" method="GET">
-                    <div class="form-group col-sm-12">
-                        <button class="btn-success btn-lg" type="submit">Clear Server</button>
-                    </div>
-                </form>
-            </div>
+            <% if(server !== undefined) { %>
+                <div class="row">
+                    <form action="/clear" method="GET">
+                        <div class="form-group col-sm-12">
+                            <button class="btn-success btn-lg" type="submit">Clear Server</button>
+                        </div>
+                    </form>
+                </div>
+            <% } %>
             <div class="row">
                 <% include partials/part_footer %>
             </div>

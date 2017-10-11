@@ -64,6 +64,8 @@ app.get('/maps', (req, res) => {
       changed: false,
       error: false,
     });
+  } else {
+    res.redirect('/server');
   }
 });
 
@@ -76,6 +78,8 @@ app.get('/configs', (req, res) => {
       changed: false,
       error: false,
     });
+  } else {
+    res.redirect('/server');
   }
 });
 
@@ -86,6 +90,8 @@ app.get('/password', (req, res) => {
       server: req.session.server,
       changed: false,
     });
+  } else {
+    res.redirect('/server');
   }
 });
 
@@ -97,6 +103,8 @@ app.get('/players', (req, res) => {
       server: req.session.server,
       playerList: '',
     });
+  } else {
+    res.redirect('/server');
   }
 });
 
@@ -108,6 +116,8 @@ app.get('/command', (req, res) => {
       commandList: config.get('common-commands'),
       changed: false,
     });
+  } else {
+    res.redirect('/server');
   }
 });
 
