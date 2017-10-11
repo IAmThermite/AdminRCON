@@ -16,7 +16,7 @@
   "configs": [
     {
       "name": "Map Config",
-      "command": "map_config",
+      "config": "map_config",
       "description": "This is a config description"
     }
   ],
