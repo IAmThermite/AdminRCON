@@ -1,7 +1,7 @@
 {
   "name": "adminrcon",
-  "version": "0.0.1",
-  "description": "A simple webapp for executing commands on a Source gameserver. Made mainly for TF2 but is configurable for all Source games.",
+  "version": "0.1.0",
+  "description": "A simple webapp for executing commands on a Source gameserver.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/LuciusDev/AdminRCON.git"
   },
   "keywords": [
-    "TF2"
+    "TF2",
+    "RCON"
   ],
   "author": "Luke Honiss",
   "license": "MIT",
