@@ -43,6 +43,12 @@
                     <div class="col-sm-12">
                         <% if(password !== undefined) { %>
                             <p>Server Password: <%= password %></p>
+                            <% if(password !== '') { %>
+                                <p>Connect String: connect <%= server.address %>; password "<%= password %>"</p>
+                            <% } else { %>
+                                <p>Connect String: connect <%= server.address %>;</p>
+                            <% } %>
+                            <p><a href="steam://connect/<%= server.address %>/<%= password %>">Direct connect</a></p>
                         <% } else { %>
                             <p>Could not get server password. Server may have no password.</p>
                         <% } %>

@@ -41,15 +41,25 @@ const getServerFromString = (string, res) =>  {
 }
 
 const getServerPassword = (req) => {
-  if(req.session.server !== undefined) {
-    var server = Rcon({
-      address: `${req.session.server.address}`,
-      password: `${req.session.server.rcon}`,
-    });
-    
-    const serverInfo = require('./actions/server.js');
-    console.log(serverInfo.run(server));
-  }
+  return new Promise((fufill, reject) => {
+    if(req.session.server !== undefined) {
+      var server = Rcon({
+        address: `${req.session.server.address}`,
+        password: `${req.session.server.rcon}`,
+      });
+      
+      const serverInfo = require('./actions/server.js');
+      const string = serverInfo.run();
+      
+      if(string === undefined) {
+        reject('0');
+      } else {
+        fufill(string);
+      }
+    } else {
+      reject('0');
+    }
+  });
 }
 
 // APP GET ROUTES
@@ -61,10 +71,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/server', (req, res) => {
-  res.render('server', {
-    title: config.get('app-name'),
-    server: req.session.server || undefined,
-    password: getServerPassword(req),
+  getServerPassword(req).then((output) => {
+    res.render('server', {
+      title: config.get('app-name'),
+      server: req.session.server || undefined,
+      password: output,
+    });
+  }).catch((e) => {
+    res.render('server', {
+      title: config.get('app-name'),
+      server: req.session.server || undefined,
+      password: undefined,
+    });
   });
 });
 
@@ -152,10 +170,10 @@ app.post('/server', (req, res) => {
   if(req.body.address !== undefined && req.body.address !== '') {
     req.session.server = {
       address: req.body.address,
-      rcon: req.body.password,
+      rcon: req.body.password || '',
     };
     res.redirect('/');
-  } else if(req.body.string) { // generate string parameters
+  } else if(req.body.string !== undefined && req.body.string !== '') { // generate string parameters
     const string = getServerFromString(req.body.string);
     req.session.server = {
       address: string[0],

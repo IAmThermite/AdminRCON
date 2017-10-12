@@ -6,10 +6,12 @@ exports.run = (server) => {
     server.connect().then(() => {
       server.command('sv_password').then((output) => {
         if(output !== '') {
-          const array = output.split(' = ').replace(/"/g );
-          
-          console.log(array);
-          return array[1];
+          const pass = output.slice(output.indexOf('"sv_password"'), output.length).replace(' - Server password for entry into multiplayer games', '');
+          console.log(pass);
+
+          const array = pass.replace(/["']/g, '').split(' = ');
+          console.log(array[1]);
+          return array[1].trim();
         } else {
           return undefined;
         }
