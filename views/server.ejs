@@ -31,11 +31,22 @@
             </div>
             <% if(server !== undefined) { %>
                 <div class="row">
-                    <form action="/clear" method="GET">
-                        <div class="form-group col-sm-12">
-                            <button class="btn-success btn-lg" type="submit">Clear Server</button>
-                        </div>
-                    </form>
+                    <div class="col-sm-12">
+                        <form action="/clear" method="GET">
+                            <div class="form-group col-sm-12">
+                                <button class="btn-success btn-lg" type="submit">Clear Server</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <% if(password !== undefined) { %>
+                            <p>Server Password: <%= password %></p>
+                        <% } else { %>
+                            <p>Could not get server password. Server may have no password.</p>
+                        <% } %>
+                    </div>
                 </div>
             <% } %>
             <div class="row">

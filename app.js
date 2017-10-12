@@ -40,6 +40,18 @@ const getServerFromString = (string, res) =>  {
   }
 }
 
+const getServerPassword = (req) => {
+  if(req.session.server !== undefined) {
+    var server = Rcon({
+      address: `${req.session.server.address}`,
+      password: `${req.session.server.rcon}`,
+    });
+    
+    const serverInfo = require('./actions/server.js');
+    console.log(serverInfo.run(server));
+  }
+}
+
 // APP GET ROUTES
 app.get('/', (req, res) => {
   res.render('index', {
@@ -52,6 +64,7 @@ app.get('/server', (req, res) => {
   res.render('server', {
     title: config.get('app-name'),
     server: req.session.server || undefined,
+    password: getServerPassword(req),
   });
 });
 
