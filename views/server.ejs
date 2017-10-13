@@ -9,7 +9,7 @@
             <div class="row">
                 <form action="/server" method="POST">
                     <div class="form-group col-sm-6">
-                        <label class="control-label" for="address">Address:</label>
+                        <label class="control-label" for="address">Server Address:</label>
                         <% if(server !== undefined) { %>
                             <input class="input-lg" value="<%= server.address %>" type="text" name="address" id="address" />
                         <% } else { %>
@@ -17,43 +17,52 @@
                         <% } %>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label class="control-label" for="password">RCON:</label>
+                        <label class="control-label" for="password">RCON Password:</label>
                         <% if(server !== undefined) { %>
                             <input class="input-lg" value="<%= server.rcon %>" type="text" name="password" id="password" />
                         <% } else { %>
                             <input class="input-lg" value="" type="text" name="password" id="password" />
                         <% } %>
                     </div>
+                    <p class="title">OR</p>
                     <div class="form-group col-sm-12">
-                        <button class="btn-success btn-lg" type="submit">Update Settings</button>
+                        <label class="control-label" for="string">Connect String:</label>
+                        <input class="input-lg" type="text" name="string" id="string" />
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <% if(server !== undefined) { %>
+                            <button type="submit" class="btn-success btn-lg">Update</button>
+                        <% } else { %>
+                            <button type="submit" class="btn-success btn-lg">Submit</button>
+                        <% } %>
                     </div>
                 </form>
             </div>
             <% if(server !== undefined) { %>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <form action="/clear" method="GET">
-                            <div class="form-group col-sm-12">
-                                <button class="btn-success btn-lg" type="submit">Clear Server</button>
-                            </div>
-                        </form>
-                    </div>
+                    <form action="/clear" method="GET">
+                        <div class="form-group col-sm-12">
+                            <button class="btn-success btn-lg" type="submit">Clear Server</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <% if(password !== undefined) { %>
-                            <p>Server Password: <%= password %></p>
                             <% if(password !== '') { %>
+                                <p>Server Password: <%= password %></p>
                                 <p>Connect String: connect <%= server.address %>; password "<%= password %>"</p>
                             <% } else { %>
                                 <p>Connect String: connect <%= server.address %>;</p>
                             <% } %>
                             <p><a href="steam://connect/<%= server.address %>/<%= password %>">Direct connect</a></p>
                         <% } else { %>
-                            <p>Could not get server password. Server may have no password.</p>
+                            <p>Could not get server password. Check your RCON Password.</p>
                         <% } %>
                     </div>
                 </div>
+            <% } else {%>
+                <p>Enter Server details above</p>
             <% } %>
             <div class="row">
                 <% include partials/part_footer %>

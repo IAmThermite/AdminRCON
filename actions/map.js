@@ -2,8 +2,7 @@ const config = require('config');
 
 exports.run = (server, body, res, req) => {
   server.connect().then(() => {
-    server.command(`changelevel ${body.mapname}`).then((output) => {
-      console.log(output);
+    server.command(`changelevel ${body.mapname}`).then((output) => {W
       const index = output.indexOf('Failed');
       if(index === -1) { // failed map change
         if(output !== '') { // error

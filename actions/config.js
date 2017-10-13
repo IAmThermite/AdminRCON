@@ -3,7 +3,6 @@ const config = require('config');
 exports.run = (server, body, res, req) => {
   server.connect().then(() => {
     server.command(`exec ${body.config}`).then((output) => {
-      console.log(output);
       const index1 = output.indexOf(' not present; not executing.'); // no cfg
       const index2 = output.indexOf('exec <filename>: execute a script file'); // invalid args
       if(index1 === -1 && index2 === -1) { // executed

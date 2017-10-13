@@ -49,15 +49,14 @@ const getServerPassword = (req) => {
       });
       
       const serverInfo = require('./actions/server.js');
-      const string = serverInfo.run();
-      
-      if(string === undefined) {
-        reject('0');
+      const output = serverInfo.run(server);
+      if(output !== undefined) {
+        fufill(output);
       } else {
-        fufill(string);
+        reject(undefined);
       }
     } else {
-      reject('0');
+      reject(undefined);
     }
   });
 }
@@ -73,13 +72,13 @@ app.get('/', (req, res) => {
 app.get('/server', (req, res) => {
   getServerPassword(req).then((output) => {
     res.render('server', {
-      title: config.get('app-name'),
+      title: 'Server Settings',
       server: req.session.server || undefined,
       password: output,
     });
   }).catch((e) => {
     res.render('server', {
-      title: config.get('app-name'),
+      title: 'Server Settings',
       server: req.session.server || undefined,
       password: undefined,
     });
@@ -116,10 +115,20 @@ app.get('/configs', (req, res) => {
 
 app.get('/password', (req, res) => {
   if(req.session.server) {
-    res.render('password', {
-      title: 'Change Server Password',
-      server: req.session.server,
-      changed: false,
+    getServerPassword(req).then((output) => {
+      res.render('password', {
+        title: 'Change Server Password',
+        server: req.session.server,
+        changed: false,
+        password: output,
+      });
+    }).catch((e) => {
+      res.render('password', {
+        title: 'Change Server Password',
+        server: req.session.server,
+        changed: false,
+        password: undefined,
+      });
     });
   } else {
     res.redirect('/server');
@@ -206,6 +215,7 @@ app.post('/execute', (req, res) => {
         full: e,
       });
     }
+    server.disconnect();
   }).catch((e) => { // cant connect to server
     res.render('error', {
       code: 400,
