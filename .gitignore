@@ -62,4 +62,5 @@ config/production.json
 
 # images
 public/images/*.jpg
+public/images/favicon.png
 !/public/images/mapname.jpg

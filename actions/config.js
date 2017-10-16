@@ -32,11 +32,21 @@ exports.run = (server, body, res, req) => {
       }
       server.disconnect();
     }).catch((e) => {
+      if(e.toString().indexOf('partialResponse') != -1) { // command executed, output too large maybe?
+        res.render('configs', {
+          title: 'Execute a config',
+          server: req.session.server,
+          configList: config.get('configs'),
+          changed: true,
+          error: false,
+        });
+      } else {
       res.render('error', {
         code: 400,
         error: 'Cannot connect to server',
         full: e,
       });
+      }
     });
   }).catch((e) => { // cant connect to server
     res.render('error', {
