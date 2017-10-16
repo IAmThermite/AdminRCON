@@ -43,6 +43,11 @@
                                         <input type="hidden" name="mapname" value="<%= mapList[i].mapfile %>" id="mapname" />                        
                                         <input type="hidden" name="action" value="map" />
                                     </form>
+                                    <form action="/execute" method="POST">
+                                        <button style="width: 100%;" type="submit" class="btn-success btn-lg">Execute <%= mapList[i].config %></button>
+                                        <input type="hidden" name="config" value="<%= mapList[i].config %>" />
+                                        <input type="hidden" name="action" value="config" />
+                                    </form>
                                 </div>
                                 <% i++ %>
                             <% } %>

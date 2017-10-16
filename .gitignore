@@ -58,7 +58,8 @@ typings/
 .env
 
 # configuration file
-config/production.json
+/config/*.json
+!/config/default.json
 
 # images
 public/images/*.jpg
