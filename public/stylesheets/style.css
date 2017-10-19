@@ -82,19 +82,34 @@ a:hover {
 
 .nav-tabs > li > a {
     color: #333333;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .nav-tabs > li > a:hover {
     background-color: #83b302;
     color: #333333;
+    border-color: #000000;
+    border-bottom-color: #c8f442;
 }
 
 .nav-tabs > li.active > a {
     background-color: #c8f442;
     color: #000000;
+    border-color: #000000;
+    border-bottom-color: #c8f442;
 }
 
 .nav-tabs > li.active > a:hover {
     background-color: #c8f442;
     color: #000000;
+    border-color: #000000;
+    border-bottom-color: #c8f442;
+ }
+
+ .nav-tabs > li.active > a:focus {
+    background-color: #c8f442;
+    color: #000000;
+    border-color: #000000;
+    border-bottom-color: #c8f442;
  }
