@@ -6,6 +6,7 @@ body {
     color: #000000;
 }
 
+
 div .footer {
     background-color: #5cc6f7;
     padding: 15px;
@@ -14,12 +15,14 @@ div .footer {
     margin-bottom: 10px;
 }
 
+
 a {
     color: #0f7704;
 }
 a:hover {
     color: #0f7704;
 }
+
 
 #navbar ul {
     margin-top: 20px;
@@ -43,29 +46,55 @@ a:hover {
     background-color: #97b926;
 }
 
+
 .success {
     background-color: #83b302;
     padding: 5px;
     border: 2px solid #000000;
 }
-
 .fail {
     background-color: #f77d50;
     padding: 5px;
     border: 2px solid #000000;
 }
 
+
 .title {
     font-size: 48px;
 }
-
 .subtitle {
     font-size: 16px;
     color: #2e4363;
 }
+
 
 .container {
     padding: 0px 40px;
     background-color: #ee6969;
     border-radius: 20px;
 }
+
+
+/* NAV TABS */
+.nav-tabs {
+    border-bottom: 1px solid #c8f442;
+}
+
+.nav-tabs > li > a {
+    color: #333333;
+}
+
+.nav-tabs > li > a:hover {
+    background-color: #83b302;
+    color: #333333;
+}
+
+.nav-tabs > li.active > a {
+    background-color: #c8f442;
+    color: #000000;
+}
+
+.nav-tabs > li.active > a:hover {
+    background-color: #c8f442;
+    color: #000000;
+ }

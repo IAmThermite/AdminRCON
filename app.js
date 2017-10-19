@@ -22,22 +22,20 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // METHODS
-const getServerFromString = (string, res) =>  {
-  const parts = string.split('; '); // divide
-
-  var array = [];
-  try {
-    for(var i = 0; i < 3; i++) {
-      array.push(parts[i].slice(parts[i].indexOf(' '), parts[i].length).replace(/"/g, '').trim());
+const getServerFromString = (string, res) =>  { // not actually async but whatever
+  return new Promise((fufill, reject) => {
+    const parts = string.split('; '); // divide
+    
+    var array = [];
+    try {
+      for(var i = 0; i < 3; i++) {
+        array.push(parts[i].slice(parts[i].indexOf(' '), parts[i].length).replace(/"/g, '').trim());
+      }
+      fufill(array);
+    } catch(e) {
+      reject(0);
     }
-    return array;
-  } catch(e) {
-    res.render('error', {
-      code: 400,
-      error: 'Invalid connect string! Format: connect <hostname>; password <password>; rcon_password <rcon_password>',
-      full: e,
-    });
-  }
+  });
 }
 
 const getServerPassword = (req) => {
@@ -177,24 +175,31 @@ app.get('/clear', (req, res) => {
 
 // APP POST ROUTES
 app.post('/server', (req, res) => {
-  if(req.body.address !== undefined && req.body.address !== '') {
+  if(req.body.address !== undefined && req.body.address !== '' && req.body.string === '') { // make sure string is empty also
     req.session.server = {
       address: req.body.address,
       rcon: req.body.password || '',
     };
-    res.redirect('/');
+    res.redirect('/server');
   } else if(req.body.string !== undefined && req.body.string !== '') { // generate string parameters
-    const string = getServerFromString(req.body.string);
-    req.session.server = {
-      address: string[0],
-      rcon: string[2],
-    }
-    res.redirect('/');
+    getServerFromString(req.body.string).then((string) => {
+      req.session.server = {
+        address: string[0],
+        rcon: string[2],
+      }
+      res.redirect('/server');
+    }).catch((e) => {
+      res.render('error', {
+        code: 500,
+        error: 'Internal Server Error',
+        full: e,
+      });
+    });
   } else {
     res.render('error', {
       code: 400,
       error: 'Please enter an IP',
-      full: ''
+      full: '',
     });
   }
 });
