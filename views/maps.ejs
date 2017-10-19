@@ -32,28 +32,78 @@
                     <input type="hidden" name="action" value="map" />
                 </form>
             </div>
-                <% for(var i=0; i<mapList.length;) { %>
-                    <div class="row">
-                        <% for(var j=0; j<4; j++) { %>
-                            <% if(mapList[i] !== undefined) { %>
-                                <div class="col-sm-3">
-                                    <form action="/execute" method="POST">
-                                        <label class="control-label" for="mapname"><%= mapList[i].realname %></label>
-                                        <input type="image" style="width: 100%; border: 2px solid #000000" src="/images/<%= mapList[i].mapfile %>.jpg" onerror="this.src='/images/mapname.jpg'" alt="<%= mapList[i].mapfile %>" />
-                                        <input type="hidden" name="mapname" value="<%= mapList[i].mapfile %>" id="mapname" />                        
-                                        <input type="hidden" name="action" value="map" />
-                                    </form>
-                                    <form action="/execute" method="POST">
-                                        <button style="width: 100%;" type="submit" class="btn-success btn-lg">Execute <%= mapList[i].config %></button>
-                                        <input type="hidden" name="config" value="<%= mapList[i].config %>" />
-                                        <input type="hidden" name="action" value="config" />
-                                    </form>
-                                </div>
-                                <% i++ %>
-                            <% } %>
-                        <% } %>
-                    </div>
+            <ul class="nav nav-tabs">
+                <% for(var i=0; i<gamemodes.length; i++) { %>
+                    <% if(i === 0) { %>
+                        <li class="active"><a data-toggle="tab" href="#<%= gamemodes[i] %>"><%= gamemodes[i] %></a></li>
+                    <% } else { %>
+                        <li><a data-toggle="tab" href="#<%= gamemodes[i] %>"><%= gamemodes[i] %></a></li>
+                    <% } %>
                 <% } %>
+            </ul>
+            
+            <div class="tab-content">
+                <% for(var i=0; i<gamemodes.length; i++) { %>
+                    <% if(i === 0) { %>
+                        <div id="<%= gamemodes[i] %>" class="tab-pane active">
+                            <% for(var j=0; j<mapList.length;) { %>
+                                <div class="row">
+                                    <% for(var r=1; r<=4; r++) { %>
+                                        <% if(mapList[j] !== undefined) { %>
+                                            <% if(mapList[j].gamemode === gamemodes[i]) { %>
+                                                <div class="col-sm-3">
+                                                    <form action="/execute" method="POST">
+                                                        <label class="control-label" for="mapname"><%= mapList[j].realname %></label>
+                                                        <input type="image" style="width: 100%; border: 2px solid #000000" src="/images/<%= mapList[j].mapfile %>.jpg" onerror="this.src='/images/mapname.jpg'" alt="<%= mapList[j].mapfile %>" />
+                                                        <input type="hidden" name="mapname" value="<%= mapList[j].mapfile %>" id="mapname" />                        
+                                                        <input type="hidden" name="action" value="map" />
+                                                    </form>
+                                                    <form action="/execute" method="POST">
+                                                        <button style="width: 100%;" type="submit" class="btn-success btn-lg">Execute <%= mapList[j].config %></button>
+                                                        <input type="hidden" name="config" value="<%= mapList[j].config %>" />
+                                                        <input type="hidden" name="action" value="config" />
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                        <% } %>
+                                        <% j++; %>
+                                        
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <div id="<%= gamemodes[i] %>" class="tab-pane">
+                            <% for(var j=0; j<mapList.length;) { %>
+                                <div class="row">
+                                    <% for(var r=1; r<=4; r++) { %>
+                                        <% if(mapList[j] !== undefined) { %>
+                                            <% if(mapList[j].gamemode === gamemodes[i]) { %>
+                                                <div class="col-sm-3">
+                                                    <form action="/execute" method="POST">
+                                                        <label class="control-label" for="mapname"><%= mapList[j].realname %></label>
+                                                        <input type="image" style="width: 100%; border: 2px solid #000000" src="/images/<%= mapList[j].mapfile %>.jpg" onerror="this.src='/images/mapname.jpg'" alt="<%= mapList[j].mapfile %>" />
+                                                        <input type="hidden" name="mapname" value="<%= mapList[j].mapfile %>" id="mapname" />                        
+                                                        <input type="hidden" name="action" value="map" />
+                                                    </form>
+                                                    <form action="/execute" method="POST">
+                                                        <button style="width: 100%;" type="submit" class="btn-success btn-lg">Execute <%= mapList[j].config %></button>
+                                                        <input type="hidden" name="config" value="<%= mapList[j].config %>" />
+                                                        <input type="hidden" name="action" value="config" />
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                        <% } %>
+                                        <% j++; %>
+                                        
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            
             <div class="row">
                 <% include partials/part_footer %>
             </div>

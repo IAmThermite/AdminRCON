@@ -90,6 +90,7 @@ app.get('/maps', (req, res) => {
     res.render('maps', {
       title: 'Change the Map',
       server: req.session.server,
+      gamemodes: config.get('gamemodes'),
       mapList: config.get('maps'),
       changed: false,
       error: false,

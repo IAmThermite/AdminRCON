@@ -5,6 +5,7 @@
     "secret": "SessionSecret",
     "cookie-maxage": 86400000
   },
+  "gamemodes": ["map"],
   "maps": [
     {
       "realname": "Map",

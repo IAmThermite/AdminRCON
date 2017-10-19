@@ -32,7 +32,7 @@ exports.run = (server, body, res, req) => {
       }
       server.disconnect();
     }).catch((e) => {
-      if(e.toString().indexOf('partialResponse') != -1) { // command executed, output too large maybe?
+      if(e.details && e.details.partialResponse) { // command executed, output too large
         res.render('configs', {
           title: 'Execute a config',
           server: req.session.server,

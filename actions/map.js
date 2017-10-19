@@ -15,6 +15,7 @@ exports.run = (server, body, res, req) => {
           res.render('maps', {
             title: 'Change the Map',
             server: req.session.server,
+            gamemodes: config.get('gamemodes'),
             mapList: config.get('maps'),
             changed: true,
             error: false,
@@ -24,6 +25,7 @@ exports.run = (server, body, res, req) => {
         res.render('maps', {
           title: 'Change the Map',
           server: req.session.server,
+          gamemodes: config.get('gamemodes'),
           mapList: config.get('maps'),
           changed: true,
           error: true,
